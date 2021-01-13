@@ -1,33 +1,17 @@
-# Docker Compose - Spring Boot Micro Services 
+# log shipping with filebeat docker & spring boot
 
 Clone the repository with 
 ```
-git clone git@github.com:briansjavablog/micro-services-spring-cloud-config.git
+git clone git@github.com:briansjavablog/log-shipping-with-filebeat-docker-spring-boot.git
 ```
 
-## Running the Config Service
-```
-cd config-service
-mvn clean package
-java -jar target/config-service-0.0.1-SNAPSHOT.jar (starts on port 8888)
-```
-
-## Running the Bank Account Service
+## Building the Bank Account Serivice Image
 ```
 cd bank-account-service
-mvn clean package
-java -jar target/bank-account-service-0.0.1-SNAPSHOT.jar (starts on port 8080)
+docker image build -t bank-service .
 ```
-
-## Retrieving Properties from Config Service
-You can test the config service by pulling back the bank account properties fora given profile. The request below pulls back properties for the uat profile. 
+## Building the Config Service Image
 ```
-http://localhost:8888/bank-account-service/uat
+cd config-service
+docker image build -t config-service .
 ```
-
-## Testing the Bank Account Service
-You can test the bank account service configuration by creating a new account. This will use the configuration pulled from the config service. 
-```
-curl -i -H "Content-Type: application/json" -X POST -d '{"accountId":"B12345","accountName":"Joe Bloggs","accountType":"CURRENT_ACCOUNT","accountBlance":1250.38}' localhost:8080/bank-account
-```
-# log shipping with filebeat docker & spring boot
