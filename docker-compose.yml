@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+   config-service:
+      image: config-service
+      container_name: config-service
+      networks:
+         - micro-service-network
+      expose:
+        - "8888"
+         
+   bank-service:
+      image: bank-service
+      container_name: bank-service
+      networks:
+         - micro-service-network
+      expose:
+         - "8080"
+      environment:
+         WAIT_HOSTS: config-service:8888
+      labels:
+         collect_logs_with_filebeat: "true"
+         decode_log_event_to_json_object: "true"
+
+networks:
+    micro-service-network:
